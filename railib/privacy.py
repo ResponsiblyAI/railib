@@ -1,5 +1,8 @@
 from math import radians
 import calendar
+import itertools as it
+import pkg_resources
+
 
 import numpy as np
 import pandas as pd
@@ -55,13 +58,13 @@ def read_taxi_data(path, source):
         ]
     elif source == "old_yellow":
         cols = [
-            "pickup_datetime",
-            "dropoff_datetime",
-            "passenger_count",
-            "pickup_longitude",
-            "pickup_latitude",
-            "dropoff_longitude",
-            "dropoff_latitude",
+            " pickup_datetime",
+            " dropoff_datetime",
+            " passenger_count",
+            " pickup_longitude",
+            " pickup_latitude",
+            " dropoff_longitude",
+            " dropoff_latitude",
         ]
 
     return (
@@ -85,6 +88,26 @@ def read_taxi_data(path, source):
             axis=1,
         )
     )
+
+
+def plot_hourly(dt_series):
+    ax = (dt_series.dt.hour.value_counts(normalize=True).sort_index() * 100).plot(
+        xticks=range(24), figsize=(12, 6), grid=True
+    )
+
+    ax.set_xlabel("Hour of Day")
+    ax.set_ylabel("% Daily Rides")
+    ax.set_title("Precentage of NYC Taxi (Yellow & Green) Daily Rides per Hour of Day")
+
+    return ax
+
+
+def plot_heatmap(df_lat_lng):
+    pickup_hm = folium.Map(location=NYC_CENTER, tiles="Stamen Toner", zoom_start=12)
+
+    (plugins.HeatMap(df_lat_lng.to_numpy(), radius=5, blur=5).add_to(pickup_hm))
+
+    return pickup_hm
 
 
 def find_rides_between_two_coords(rides_df, pickup_coords, dropoff_coords, radius=500):

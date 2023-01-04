@@ -38,7 +38,7 @@ def accuracy_score(df, model, count_vect):
     return model.score(df_counts, df["occupation"])
 
 
-def predict(bios):
+def predict(bios, model, count_vect):
     X_counts = count_vect.transform(bios)
     return model.predict(X_counts)
 
