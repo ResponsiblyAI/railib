@@ -14,28 +14,28 @@ feture_to_title_dict = {
 }
 
 
-def sampled(df, display_list=["occupation", "prediction", "gender"]):
+def sampled(df, display_list=["occupation", "prediction", "gender"], bio='bio'):
     for _, row in df.sample(10).iterrows():
         for feature in display_list:
             display(Markdown(f"### {feture_to_title_dict[feature]}: " + row[feature]))
-        display(Markdown(row["bio"]))
+        display(Markdown(row[bio]))
         display(Markdown("----"))
 
 
-def train(train_df):
+def train(train_df, X='bio', y='occupation'):
     # feature engineering: Bag of Words
     count_vect = CountVectorizer()
-    X_train_counts = count_vect.fit_transform(train_df["bio"])
+    X_train_counts = count_vect.fit_transform(train_df[X])
 
     # model: Logistic Regression
     # might take a minute or two to run
-    model = SGDClassifier().fit(X_train_counts, train_df["occupation"])
+    model = SGDClassifier().fit(X_train_counts, train_df[y])
     return count_vect, model
 
 
-def accuracy_score(df, model, count_vect):
-    df_counts = count_vect.transform(df["bio"])
-    return model.score(df_counts, df["occupation"])
+def accuracy_score(df, model, count_vect, X='bio', y='occupation'):
+    df_counts = count_vect.transform(df[X])
+    return model.score(df_counts, df[y])
 
 
 def predict(bios, model, count_vect):
@@ -52,7 +52,7 @@ def classification_metrics(df, label_col, prediction_col):
     return df
 
 
-def unfairness_metrics_df(test_df):
+def create_unfairness_metrics_df(test_df):
     # seperate the test dataset into two gendered datasets
     male_test_df = test_df[test_df["gender"] == "M"]
     female_test_df = test_df[test_df["gender"] == "F"]
@@ -166,3 +166,25 @@ def unfairness_metrics_df_gap(unfairness_metrics_df):
     ]
 
     return unfairness_metrics_df
+
+# source: https://stackoverflow.com/questions/46027653/adding-labels-in-x-y-scatter-plot-with-seaborn
+def label_point(x, y, val, ax):
+    a = pd.concat({'x': x, 'y': y, 'val': val}, axis=1)
+    for i, point in a.iterrows():
+        ax.text(point['x']+.02, point['y'], str(point['val']))
+
+
+def plot_labeled_regression(x, y, z, data, **kwargs):
+    if 'aspect' not in kwargs:
+        kwargs['aspect'] = 2
+    if 'height' not in kwargs:
+        kwargs['height'] = 6
+
+    ax = sns.lmplot(x=x, y=y, data=data,
+              **kwargs)
+    
+    label_point(data[x],
+            data[y],
+            data[z], plt.gca())
+    
+    return ax
