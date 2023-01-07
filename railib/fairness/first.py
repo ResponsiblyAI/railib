@@ -14,11 +14,11 @@ feture_to_title_dict = {
 }
 
 
-def sampled(df, display_list=["occupation", "prediction", "gender"]):
+def sampled(df, display_list=["occupation", "prediction", "gender"], bio='bio'):
     for _, row in df.sample(10).iterrows():
         for feature in display_list:
             display(Markdown(f"### {feture_to_title_dict[feature]}: " + row[feature]))
-        display(Markdown(row["bio"]))
+        display(Markdown(row[bio]))
         display(Markdown("----"))
 
 
