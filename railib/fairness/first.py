@@ -7,18 +7,23 @@ from pycm import ConfusionMatrix
 from IPython.display import display, Markdown
 
 
+
 feture_to_title_dict = {
     "occupation": "Ground-Truth Occupation",
     "prediction": "Prediction",
     "gender": "Gender",
+    'counterfactuals': 'Counterfactuals'
 }
 
 
-def sampled(df, display_list=["occupation", "prediction", "gender"], bio='bio'):
-    for _, row in df.sample(10).iterrows():
+def sampled(df, display_list=["occupation", "prediction", "gender"], bio='bio', samples=10, Counterfactual=False):
+    for _, row in df.sample(samples).iterrows():
         for feature in display_list:
             display(Markdown(f"### {feture_to_title_dict[feature]}: " + row[feature]))
         display(Markdown(row[bio]))
+        if Counterfactual:
+          display(Markdown('Counterfactuals:'))
+          display(Markdown(row['counterfactuals']))
         display(Markdown("----"))
 
 
