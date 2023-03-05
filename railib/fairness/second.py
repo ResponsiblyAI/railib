@@ -101,6 +101,10 @@ def predict_risk_score(train: DataFrame, test: DataFrame,
     """
     X_train, y_train = preprocessing(train, X_columns, y_column)
     X_test, y_test = preprocessing(test, X_columns, y_column)
+    
+    assert set(X_train.columns) == set(X_test.columns)
+    X_test = X_test[X_train.columns]
+    
     # fit predict
     model = RegressionModel()
     model.fit(X_train, y_train)
