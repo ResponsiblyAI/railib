@@ -87,6 +87,7 @@ def read_taxi_data(path, source):
             ),
             axis=1,
         )
+        .dropna()
     )
 
 
