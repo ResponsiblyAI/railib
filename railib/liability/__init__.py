@@ -212,24 +212,23 @@ def present_image(filename):
   cv2_imshow(im_bgr)
   # imshow(np.asarray(img))
 
-def present_matrix_of_images(filename='./data/data/test.txt', x_num_of_im=5, y_num_of_im=5, 
-                            labels_path='', sample=True, with_prediction=False):
+
+def present_matrix_of_images(filename='./data/data/test.txt', ncols=2, 
+                            labels_path='', sample=20, with_prediction=False):
   paths_file = Path(filename)
   img_paths = paths_file.read_text().splitlines()
 
-  fig = plt.figure(figsize=(100, 60))
+#   fig = plt.figure(figsize=(100, 60))
 
-  num_of_images_to_present = x_num_of_im * y_num_of_im
-  if num_of_images_to_present > len(img_paths):
-      num_of_images_to_present = len(img_paths)
+  if sample is not None:
+      img_paths = random.sample(img_paths, sample)
 
-  if sample:
-      random.shuffle(img_paths)
+#   nrows = len(img_paths) // ncols
+#   nrows += 1 if len(img_paths) % ncols else 0
 
-  for i in range(num_of_images_to_present):
+  for i in range(len(img_paths)):
       image = Path(img_paths[i]).stem + '.jpg'
-
-      ax = fig.add_subplot(x_num_of_im, y_num_of_im, i + 1, xticks=[], yticks=[])
+    #   ax = fig.add_subplot(nrows, ncols, i + 1, xticks=[], yticks=[])
       img = Image.open(img_paths[i])
       draw = ImageDraw.Draw(img)
 
