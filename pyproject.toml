@@ -10,7 +10,7 @@ repository = "https://github.com/ResponsiblyAI/railib"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 ipython = "^7.9.0"
 numpy = "^1.21.6" 
 pandas = "^1.3.5"
@@ -20,6 +20,7 @@ seaborn = "^0.11.2"
 pycm = "^3.7"
 geopy = "^1.17.0"
 folium = "^0.12.1"
+opencv-python = "^4.7.0.72"
 
 [tool.poetry.dev-dependencies]
 
