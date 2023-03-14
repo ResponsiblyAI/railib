@@ -21,8 +21,9 @@ LABELS = ['Prohibitory', 'Priority', 'Danger', 'Mandatory']
 
 BASE_PATH = '/content'
 
-DETECT_PATH = BASE_PATH + '/yolo5/detect.py'
-DETECT_EXP_PATH = BASE_PATH + '/yolo5/runs/detect'
+YOLO_PATH = BASE_PATH + '/yolov5'
+DETECT_PATH = YOLO_PATH + '/detect.py'
+DETECT_EXP_PATH = YOLO_PATH + '/runs/detect'
 
 GT_PATH = BASE_PATH + '/data/data/GT.csv'
 
