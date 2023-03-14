@@ -17,6 +17,8 @@ import subprocess
 import cv2
 from google.colab.patches import cv2_imshow
 
+FONT = 'LiberationSerif-Regular.ttf'
+
 LABELS = ['Prohibitory', 'Priority', 'Danger', 'Mandatory']
 
 BASE_PATH = '/content'
@@ -182,7 +184,7 @@ def im_write(im_path, labels_path):
   img = Image.open(im_path)
 
   draw = ImageDraw.Draw(img)
-  font = ImageFont.truetype('LiberationSerif-Regular.ttf', 40)
+  font = ImageFont.truetype(FONT, 40)
 
   labels = get_im_labels(im_id, labels_path, False)
 
@@ -233,7 +235,7 @@ def present_matrix_of_images(filename='./data/data/test.txt', x_num_of_im=5, y_n
 
       if with_prediction:
           # font = ImageFont.truetype(<font-file>, <font-size>)
-          font = ImageFont.truetype('./src/arial-bold.ttf', 20)
+          font = ImageFont.truetype(FONT, 20)
           x, y = 0, 0
           labels = get_im_labels(image, labels_path)
 
