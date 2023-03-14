@@ -182,7 +182,7 @@ def im_write(im_path, labels_path):
   img = Image.open(im_path)
 
   draw = ImageDraw.Draw(img)
-  font = ImageFont.truetype('./src/arial.ttf', 40)
+  font = ImageFont.truetype('LiberationSerif-Regular.ttf', 40)
 
   labels = get_im_labels(im_id, labels_path, False)
 
