@@ -237,13 +237,16 @@ def present_matrix_of_images(filename='./data/data/test.txt', ncols=2,
 
       if with_prediction:
           # font = ImageFont.truetype(<font-file>, <font-size>)
-          font = ImageFont.truetype(FONT, 20)
+          size = 20
+          font = ImageFont.truetype(FONT, size)
           x, y = 0, 0
           labels = get_im_labels(image, labels_path)
 
-          w, h = font.getsize(labels)
-          h *= sum('\n' in item for item in labels)
-          # w = sum('\n' in item for item in labels)
+          longest_label = max(((len(label), label) for label in labels.splitlines()))[1]
+          w = font.getlength(longest_label)
+          h = size * sum('\n' in item for item in labels)          
+w, h = font.getsize(labels)
+          
           draw.rectangle((x, y, x + w, y + h), fill='black')
 
           # draw.text((x, y), "Sample Text", (r, g, b))
