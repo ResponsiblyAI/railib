@@ -245,7 +245,7 @@ def present_matrix_of_images(filename='./data/data/test.txt', ncols=2,
           longest_label = max(((len(label), label) for label in labels.splitlines()))[1]
           w = font.getlength(longest_label)
           h = size * sum('\n' in item for item in labels)          
-w, h = font.getsize(labels)
+          w, h = font.getsize(labels)
           
           draw.rectangle((x, y, x + w, y + h), fill='black')
 
