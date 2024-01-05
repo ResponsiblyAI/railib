@@ -205,7 +205,7 @@ def im_write(im_path, labels_path):
   im_bgr = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
   cv2_imshow(im_bgr)
   # imshow(np.asarray(img))
-
+  img.close()
 
 def present_image(filename):
   img = Image.open(filename)
@@ -252,7 +252,8 @@ def present_matrix_of_images(filename='./data/data/test.txt', ncols=2,
       im_bgr = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
       cv2_imshow(im_bgr)
       # ax.set_title(f'{labels}')
-
+      
+      img.close()
 
 def get_detection_labels_folder(detect_output):
   return detect_output[-2].split(' ')[-1]
@@ -381,6 +382,7 @@ def apply_augmentation(filename, aug_func, **aug_params):
     output_img_paths.append(output_img_path)
     
     PIL.Image.fromarray(img).save(output_img_path)
+    img.close()
 
   output_paths_file = paths_file.parent / idetifier
   output_paths_file = output_paths_file.with_suffix('.txt')
