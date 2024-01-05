@@ -183,15 +183,18 @@ def im_write(im_path, labels_path):
   im_id = im_path.split('/')[-1]
   img = Image.open(im_path)
 
+  size = 40
   draw = ImageDraw.Draw(img)
-  font = ImageFont.truetype(FONT, 40)
+  font = ImageFont.truetype(FONT, size)
 
   labels = get_im_labels(im_id, labels_path, False)
 
   x, y = 0, 0
-  w, h = font.getsize(labels)
-  h *= sum('\n' in item for item in labels)
-  # w = sum('\n' in item for item in labels)
+  
+  longest_label = max(((len(label), label) for label in labels.splitlines()))[1]
+  w = font.getlength(longest_label)
+  h = size * sum('\n' in item for item in labels)
+
   draw.rectangle((x, y, x + w, y + h), fill='black')
 
   draw.text((0, 0), labels, (209, 239, 8), font=font)
