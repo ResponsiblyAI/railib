@@ -384,7 +384,6 @@ def apply_augmentation(filename, aug_func, **aug_params):
     output_img_paths.append(output_img_path)
     
     PIL.Image.fromarray(img).save(output_img_path)
-    img.close()
 
   output_paths_file = paths_file.parent / idetifier
   output_paths_file = output_paths_file.with_suffix('.txt')
