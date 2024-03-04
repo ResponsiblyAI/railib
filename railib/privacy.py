@@ -13,6 +13,8 @@ import geopy
 from geopy import Nominatim
 import datetime as dt
 
+TILES = "Cartodb Positron"
+
 NYC_CENTER = np.array([40.7128, -74.0060])
 
 geolocator = Nominatim()
@@ -104,7 +106,7 @@ def plot_hourly(dt_series):
 
 
 def plot_heatmap(df_lat_lng):
-    pickup_hm = folium.Map(location=NYC_CENTER, tiles="Stamen Toner", zoom_start=12)
+    pickup_hm = folium.Map(location=NYC_CENTER, tiles=TILES, zoom_start=12)
 
     (plugins.HeatMap(df_lat_lng.to_numpy(), radius=5, blur=5).add_to(pickup_hm))
 
@@ -143,7 +145,7 @@ def build_duration_table_viz(rides_df, pickup_address, dropoff_address, radius=5
         .rename(dict(enumerate(calendar.day_name)))
     )
 
-    between_map = folium.Map(location=NYC_CENTER, tiles="Stamen Toner", zoom_start=12)
+    between_map = folium.Map(location=NYC_CENTER, tiles=TILES, zoom_start=12)
 
     folium.Marker(
         pickup_coords, icon=folium.Icon(color="red", icon="taxi", prefix="fa")
@@ -177,7 +179,7 @@ def find_closest_rides(rides_df, poi_address, mode="both", radius=10):
 
 def plot_markers(df):
 
-    map_ = folium.Map(location=NYC_CENTER, tiles="Stamen Toner", zoom_start=12)
+    map_ = folium.Map(location=NYC_CENTER, tiles=TILES, zoom_start=12)
 
     for _, row in df.iterrows():
 
@@ -242,7 +244,7 @@ def plot_closest_rides(rides_df, poi_address, mode="both", radius=10):
 
 
 def plot_grid_map(cell_size):
-    grid_map = folium.Map(location=NYC_CENTER, tiles="Stamen Toner", zoom_start=12)
+    grid_map = folium.Map(location=NYC_CENTER, tiles=TILES, zoom_start=12)
 
     for shift in it.product(np.arange(-0.1, 0.1, cell_size), repeat=2):
         shift_arr = np.array(shift)
