@@ -9,7 +9,7 @@ import folium
 from folium import plugins
 import geopy
 from geopy import Nominatim
-from geopy.exc import GeocoderTimedOut
+from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
 import datetime as dt
 
 TILES = "Cartodb Positron"
@@ -186,7 +186,7 @@ def plot_markers(df):
             marker_address = geolocator.reverse((row["lat"], row["lng"])).address.rsplit(
                 ",", 4
             )[0]
-        except GeocoderTimedOut:
+        except (GeocoderTimedOut, GeocoderUnavailable):
             marker_address = ""
         
         maker_popoutf = (
