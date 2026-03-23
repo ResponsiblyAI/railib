@@ -1,6 +1,7 @@
 from math import radians
 import calendar
 import itertools as it
+import time
 
 import numpy as np
 import pandas as pd
@@ -9,7 +10,7 @@ import folium
 from folium import plugins
 import geopy
 from geopy import Nominatim
-from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
+from geopy.exc import GeocoderTimedOut, GeocoderUnavailable, GeocoderRateLimited
 import datetime as dt
 
 TILES = "Cartodb Positron"
@@ -186,8 +187,9 @@ def plot_markers(df):
             marker_address = geolocator.reverse((row["lat"], row["lng"])).address.rsplit(
                 ",", 4
             )[0]
-        except (GeocoderTimedOut, GeocoderUnavailable):
+        except (GeocoderTimedOut, GeocoderUnavailable, GeocoderRateLimited):
             marker_address = ""
+        time.sleep(1)  # Nominatim rate limit: 1 request/second
         
         maker_popoutf = (
             f"<b>Address:</b> {marker_address}\n" f'<b>Timestamp:</b> {row["dt"]}'
