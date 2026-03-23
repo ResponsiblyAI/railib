@@ -15,7 +15,10 @@ import json
 import random
 import subprocess
 import cv2
-from google.colab.patches import cv2_imshow
+try:
+    from google.colab.patches import cv2_imshow
+except ImportError:
+    from cv2 import imshow as cv2_imshow
 
 FONT = 'LiberationSerif-Regular.ttf'
 

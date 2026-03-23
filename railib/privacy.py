@@ -1,8 +1,6 @@
 from math import radians
 import calendar
 import itertools as it
-import pkg_resources
-
 
 import numpy as np
 import pandas as pd
@@ -18,8 +16,8 @@ TILES = "Cartodb Positron"
 
 NYC_CENTER = np.array([40.7128, -74.0060])
 
-geolocator = Nominatim()
 geopy.geocoders.options.default_user_agent = "ai-law"
+geolocator = Nominatim(user_agent="ai-law")
 
 
 def distance_poi(rides_df, poi_coords, mode="pickup"):
