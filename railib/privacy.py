@@ -17,7 +17,7 @@ TILES = "Cartodb Positron"
 NYC_CENTER = np.array([40.7128, -74.0060])
 
 geopy.geocoders.options.default_user_agent = "ai-law"
-geolocator = Nominatim(user_agent="ai-law")
+geolocator = Nominatim(user_agent="ai-law", timeout=10)
 
 
 def distance_poi(rides_df, poi_coords, mode="pickup"):
