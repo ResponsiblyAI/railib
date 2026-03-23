@@ -27,7 +27,7 @@ def distance_poi(rides_df, poi_coords, mode="pickup"):
     assert mode in ("pickup", "dropoff")
 
     rides_radians = (
-        rides_df[[f"{mode}_lat", f"{mode}_lng"]].applymap(radians).to_numpy()
+        rides_df[[f"{mode}_lat", f"{mode}_lng"]].map(radians).to_numpy()
     )
     poi_radians = np.array([radians(poi_coords[0]), radians(poi_coords[1])])[None, :]
 
